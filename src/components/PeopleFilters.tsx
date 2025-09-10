@@ -1,15 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 export const PeopleFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query') || '');
-  const selectedCenturies = searchParams.getAll('centuries') || [];
+  const selectedCenturies = searchParams.getAll('centuries');
   const selectedSex = searchParams.get('sex');
 
   const CENTURIES = ['16', '17', '18', '19', '20'];
 
-  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
 
     setQuery(value);
@@ -22,7 +22,6 @@ export const PeopleFilters = () => {
       params.delete('query');
     }
 
-    params.set('query', e.currentTarget.value);
     setSearchParams(params);
   };
 

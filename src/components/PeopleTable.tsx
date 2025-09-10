@@ -16,9 +16,14 @@ const SORT_TYPES = [
   { key: 'died', label: 'Died' },
 ];
 
+const allowedSorts: (keyof Person)[] = ['name', 'sex', 'born', 'died'];
+
 export const PeopleTable: React.FC<Props> = ({ people, selectedSlug }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortField = searchParams.get('sort');
+  const sortFieldParam = searchParams.get('sort');
+  const sortField = allowedSorts.includes(sortFieldParam as keyof Person)
+    ? (sortFieldParam as keyof Person)
+    : null;
   const sortOrder = searchParams.get('order');
 
   const query = searchParams.get('query')?.toLowerCase() || '';
@@ -73,6 +78,18 @@ export const PeopleTable: React.FC<Props> = ({ people, selectedSlug }) => {
     sortedPeople.sort((a, b) => {
       const aValue = a[sortField as keyof Person];
       const bValue = b[sortField as keyof Person];
+
+      if (aValue == null && bValue != null) {
+        return 1;
+      }
+
+      if (aValue != null && bValue == null) {
+        return -1;
+      }
+
+      if (aValue == null && bValue == null) {
+        return 0;
+      }
 
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         return aValue.localeCompare(bValue);

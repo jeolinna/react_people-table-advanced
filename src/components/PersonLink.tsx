@@ -5,14 +5,13 @@ import { Link, useLocation } from 'react-router-dom';
 type Props = {
   person: Person | null;
   name?: string | null;
-  sex?: string;
 };
 
 export const PersonLink: React.FC<Props> = ({ person, name }) => {
   const location = useLocation();
 
   if (!name) {
-    return <>-</>;
+    return <span>-</span>;
   }
 
   if (person) {

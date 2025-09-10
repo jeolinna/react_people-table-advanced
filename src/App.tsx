@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import HomePage from './components/pages/HomePage';
 import PeoplePage from './components/pages/PeoplePage';
-import NotFoundPage from './components/pages/HotFoundPage';
+import NotFoundPage from './components/pages/NotFoundPage';
 
 import './App.scss';
 
